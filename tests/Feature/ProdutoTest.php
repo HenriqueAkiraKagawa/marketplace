@@ -104,4 +104,20 @@ class ProdutoTest extends TestCase
                 
             ]);
     }
+    /**
+     * Teste de pesquisa de registro com falha
+     *
+     * @return void
+     */
+    public function testPesquisaProdutoComFalha()
+    {
+        // Fazer pesquisa com um id inexistente
+        $response = $this->getJson('/api/produtos/999'); // o 999 nao pode existir
+
+        // Veriicar a resposta
+        $response->assertStatus(404)
+            ->assertJson([
+                'message' => 'Produto não encontrado'
+            ]);
+    }
 }
