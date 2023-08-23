@@ -10,4 +10,9 @@ class Produto extends Model
     use HasFactory;
 
     protected $fillable = ['nome', 'descricao', 'preco','estoque','tipo_id'];
+
+    public function tipo()
+    {
+        return $this->belongsTo(Tipo::class,"tipo_id");
+    }
 }

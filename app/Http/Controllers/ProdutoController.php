@@ -6,7 +6,6 @@ use App\Models\Produto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProdutoRequest;
 use App\Http\Requests\UpdateProdutoRequest;
-use App\Models\Tipo;
 
 class ProdutoController extends Controller
 
@@ -53,12 +52,12 @@ class ProdutoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProdutoRequest $request, Produto $id)
+    public function update(UpdateProdutoRequest $request, $id)
     {
         $produto = Produto::find($id);
 
         if (!$produto) {
-            return response()->json(['message' => 'Tipo não encontrado'], 404);
+            return response()->json(['message' => 'Produto não encontrado'], 404);
         }
 
         // Faça o update do produto
@@ -71,7 +70,7 @@ class ProdutoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Produto $id)
+    public function destroy($id)
     {
         // Encontre um produto pelo id
         $produto = Produto::find($id);

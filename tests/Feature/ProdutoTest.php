@@ -120,4 +120,186 @@ class ProdutoTest extends TestCase
                 'message' => 'Produto não encontrado'
             ]);
     }
+
+    /**
+     *Teste de update com sucesso
+     *
+     * @return void
+     */
+    public function testUpdateProdutoSucesso()
+    {
+        // Crie um produto fake
+        $produto = Produto::factory()->create();
+
+        // Dados para update
+        $newData = [
+            'nome' => 'Novo nome',
+            'descricao' => 'Novo nome',
+            'preco' => 3.55,
+            'estoque' => 5,
+            'tipo_id' => $produto->tipo->id
+
+        ];
+
+        // Faça uma chamada PUT
+        $response = $this->putJson('/api/produtos/' . $produto->id, $newData);
+
+        // Verifique a resposta
+        $response->assertStatus(200)
+            ->assertJson([
+                'id' => $produto->id,
+                'nome' => 'Novo nome',
+                'descricao' => 'Novo nome',
+                'preco' => 3.55,
+                'estoque' => 5,
+                'tipo_id' => $produto->tipo->id
+            ]);
+    }
+    /**
+     * Testando com falhas
+     *
+     * @return void
+     */
+    public function testUpdateProdutoDataInvalida()
+    {
+        // Crie um produto falso
+        $produto = produto::factory()->create();
+
+        // Crie dados falhos
+        $invalidData = [
+            'descricao' => '', // Invalido: Descricao vazio
+        ];
+
+        // faça uma chamada PUT
+        $response = $this->putJson('/api/produtos/' . $produto->id, $invalidData);
+
+        // Verificar se teve um erro 422
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['descricao']);
+    }
+     /**
+     * Teste update de produto
+     *
+     * @return void
+     */
+    public function testUpdateProdutoNaoExistente()
+    {
+        $produto = produto::factory()->create();
+
+        $newData =  [
+            'nome' => 'Novo nome',
+            'descricao' => 'Novo nome',
+            'preco' => 3.55,
+            'estoque' => 5,
+            'tipo_id' => $produto->tipo->id
+
+        ];
+
+        // Faça uma chamada para um id falho
+        $response = $this->putJson('/api/produtos/9999', $newData); //O 999 não deve existir
+
+        // Verificar o retorno 404
+        $response->assertStatus(404)
+            ->assertJson([
+                'message' => 'Produto não encontrado'
+            ]);
+    }
+    /**
+     * Teste de update com os mesmos dados
+     *
+     * @return void
+     */
+    public function testUpdateProdutoMesmosDados()
+    {
+        // Crie um produto fake
+        $produto = Produto::factory()->create();
+
+        // Data para update
+        $sameData = [
+                'nome' => 'Novo nome',
+                'descricao' => 'Novo nome',
+                'preco' => 3.55,
+                'estoque' => 5,
+                'tipo_id' => $produto->tipo->id           
+        ];
+
+        // Faça uma chamada PUT
+        $response = $this->putJson('/api/produtos/' . $produto->id, $sameData);
+
+        // Verifique a resposta
+        $response->assertStatus(200)
+            ->assertJson([
+                    'nome' => 'Novo nome',
+                    'descricao' => 'Novo nome',
+                    'preco' => 3.55,
+                    'estoque' => 5,
+                    'tipo_id' => $produto->tipo->id
+            ]);
+    }
+    public function testUpdateProdutoNomeDuplicada()
+    {
+        // Crie dois produtos fakes
+        $PExistente = produto::factory()->create();
+        $PUpdate = produto::factory()->create();
+
+        // update
+        $sameData = [
+            'nome' => $PExistente->nome,
+            'descricao' => $PExistente->descricao,
+            'preco' => $PExistente->preco,
+            'estoque' => $PExistente->estoque,
+            'tipo_id' => $PExistente->tipo->id            
+        ];
+
+        // Faça o put 
+        $response = $this->putJson('/api/produtos/' . $PUpdate->id, $sameData);
+
+        // Verifique a resposta
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['nome']);
+    }
+    /**
+     * Teste de deletar com sucesso
+     *
+     * @return void
+     */
+    public function testDeleteProduto()
+    {
+        // Criar produto fake
+        $produto = produto::factory()->create();
+
+        // enviar requisição para Delete
+        $response = $this->deleteJson('/api/produtos/' . $produto->id);
+
+        // Verifica o Detele
+        $response->assertStatus(200)
+            ->assertJson([
+                'message' => 'produto deletado com sucesso!'
+            ]);
+
+        //Verifique se foi deletado do banco
+        $this->assertDatabaseMissing('produtos', ['id' => $produto->id]);
+    }
+
+    /**
+     * Teste remoção de registro inexistente
+     *
+     * @return void
+     */
+    public function testDeleteProdutoNaoExistente()
+    {
+        // enviar requisição para Delete
+        $response = $this->deleteJson('/api/tipos/999');
+
+        // Verifique a resposta
+        $response->assertStatus(404)
+            ->assertJson([
+                'message' => 'Tipo não encontrado!'
+            ]);
+    }
+
+
+
+  
+
 }

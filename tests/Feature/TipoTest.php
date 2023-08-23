@@ -119,7 +119,7 @@ class TipoTest extends TestCase
     }
 
     /**
-     *Teste de upgrade com sucesso
+     *Teste de Update$tipoUpdate com sucesso
      *
      * @return void
      */
@@ -185,7 +185,7 @@ class TipoTest extends TestCase
     }
 
     /**
-     * Teste de upgrade com os mesmos dados
+     * Teste de Update com os mesmos dados
      *
      * @return void
      */
@@ -211,7 +211,7 @@ class TipoTest extends TestCase
     }
 
     /**
-     * Teste upgrade com nome duplicado
+     * Teste update com nome duplicado
      *
      * @return void
      */
@@ -219,15 +219,15 @@ class TipoTest extends TestCase
     {
         // Crie dois tipos fakes
         $tipoExistente = Tipo::factory()->create();
-        $tipoUpgrade = Tipo::factory()->create();
+        $tipoUpdate = Tipo::factory()->create();
 
-        // Para para upgrade
+        // update
         $newData = [
             'descricao' => $tipoExistente->tipo,            
         ];
 
         // Faça o put 
-        $response = $this->putJson('/api/tipos/' . $tipoUpgrade->id, $newData);
+        $response = $this->putJson('/api/tipos/' . $tipoUpdate->id, $newData);
 
         // Verifique a resposta
         $response->assertStatus(422)
