@@ -11,7 +11,7 @@ class StoreAvaliacaoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,6 +22,9 @@ class StoreAvaliacaoRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'descricao' => 'min:2|required',
+            'nota' => 'numeric|required',
+            'produto_id' => 'required|exists:produtos,id',
             //
         ];
     }

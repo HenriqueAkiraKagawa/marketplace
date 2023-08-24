@@ -15,10 +15,10 @@ class AvaliacaoController extends Controller
     public function index()
     {
         //Pegar a lista do banco
-        $avaliacao = Avaliacao::all();
+        $avaliacaos = Avaliacao::all();
 
         //retorna lista em json
-        return response()->json(['data'=>$avaliacao]);
+        return response()->json(['data'=>$avaliacaos]);
     }
 
     /**
@@ -36,18 +36,18 @@ class AvaliacaoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Avaliacao $avaliacao)
+    public function destroy($id)
     {
         // Encontre um produto pelo id
-        $avaliacao = Avaliacao::find($avaliacao);
+        $avaliacao = Avaliacao::find($id);
 
         if (!$avaliacao) {
-            return response()->json(['message' => 'avaliacao não encontrado!'], 404);
+            return response()->json(['message' => 'Avaliação não encontrado!'], 404);
         }  
           
         // Delete the brand
         $avaliacao->delete();
         
-        return response()->json(['message' => 'avaliacao deletado com sucesso!'], 200);
+        return response()->json(['message' => 'Avaliação deletado com sucesso!'], 200);
     }
 }

@@ -11,7 +11,7 @@ class UpdateAvaliacaoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return True;
     }
 
     /**
@@ -22,6 +22,9 @@ class UpdateAvaliacaoRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'descricao' => 'min:2|required',
+            'nota' => 'integer|required',
+            'produto_id' => 'required|exists:produtos,id',
             //
         ];
     }

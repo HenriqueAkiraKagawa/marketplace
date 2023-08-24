@@ -248,7 +248,7 @@ class TipoTest extends TestCase
         // enviar requisição para Delete
         $response = $this->deleteJson('/api/tipos/' . $tipo->id);
 
-        // Verifica o Detele
+        // Verifica o Delete
         $response->assertStatus(200)
             ->assertJson([
                 'message' => 'Tipo deletado com sucesso!'
