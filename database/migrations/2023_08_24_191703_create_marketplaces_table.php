@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string('nome')->unique();
             $table->text('descricao');
             $table->string('url');
-            $table->unsignedBigInteger('produto_id');
-            $table->foreign('produto_id')->references('id')->on('produtos');
             $table->timestamps();
         });
     }

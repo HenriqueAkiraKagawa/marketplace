@@ -9,10 +9,5 @@ class Marketplace extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'descricao', 'url', 'produto_id'];
-    
-    public function produto()
-    {
-        return $this->belongsTo(Produto::class,"produto_id");
-    }
+    protected $fillable = ['nome', 'descricao', 'url'];
 }

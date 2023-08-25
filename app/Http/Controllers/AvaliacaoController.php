@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Avaliacao;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAvaliacaoRequest;
-use App\Http\Requests\UpdateAvaliacaoRequest;
 
 class AvaliacaoController extends Controller
 {

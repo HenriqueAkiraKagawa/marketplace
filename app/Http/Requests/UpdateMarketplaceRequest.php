@@ -23,6 +23,9 @@ class UpdateMarketplaceRequest extends FormRequest
     {
         return [
             //
+            'nome' => 'min:2|unique:marketplaces,nome,' . $this->route('marketplace') . ',id|required',
+            'descricao' => 'min:2|required',
+            'url' => 'min:2|unique:marketplaces,url,' . $this->route('marketplace') . ',id|required',
         ];
     }
 }

@@ -23,11 +23,9 @@ class StoreMarketplaceRequest extends FormRequest
     {
         return [
             //
-            'nome' => 'min:2|unique:marketplaces,nome,' . $this->route('marketplace') . '.id|required',
+            'nome' => 'min:2|unique:marketplaces,nome,' . $this->route('marketplace') . ',id|required',
             'descricao' => 'min:2|required',
-            'preco' => 'numeric|required',
-            'estoque' => 'numeric|required',
-            'tipo_id' => 'required|exists:tipos,id',
+            'url' => 'min:2|unique:marketplaces,url,' . $this->route('marketplace') . ',id|required',
         ];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\AvaliacaoController;
 use App\Http\Controllers\TipoController;
 use Illuminate\Http\Request;
@@ -48,3 +49,12 @@ Route::middleware('api')->prefix('avaliacaos')->group(function ()   {
     Route::delete('/{avaliacao}', [AvaliacaoController::class, 'destroy']);
 });
 
+//25/08/23
+//Rotas Marketplace
+Route::middleware('api')->prefix('marketplaces')->group(function ()   {
+    Route::get('/', [MarketplaceController::class, 'index']);
+    Route::post('/', [MarketplaceController::class, 'store']);
+    Route::get('/{marketplace}', [MarketplaceController::class, 'show']);
+    Route::put('/{marketplace}', [MarketplaceController::class, 'update']);
+    Route::delete('/{marketplace}', [MarketplaceController::class, 'destroy']);
+});
